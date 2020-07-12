@@ -1,0 +1,20 @@
+.formItemFlex {
+	display: flex;
+	margin-bottom: 1rem;
+}
+
+.label {
+	flex-basis: 10%;
+	display: flex;
+	align-items: flex-end;
+	font-weight: bold;
+}
+.bodyLabel {
+	align-items: center;
+}
+.formControl {
+	flex: 1;
+}
+.submitBtnContainer {
+	text-align: right;
+}
