@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import { validate } from '../../../../utils/validators';
 
@@ -87,6 +88,31 @@ const Input = (props) => {
 						onChange={changeHandler}
 						onBlur={touchHandler}
 					/>
+				);
+			}
+			case 'select': {
+				const { disabled, label, selectItems, errorText } = props;
+				return (
+					<TextField
+						id={id}
+						select
+						disabled={disabled}
+						label={label}
+						value={inputState.value}
+						onChange={changeHandler}
+						onBlur={touchHandler}
+						fullWidth={true}
+						error={!inputState.isValid && inputState.isTouched}
+						helperText={!inputState.isValid && inputState.isTouched && errorText}
+					>
+						{selectItems.map((item, index) => {
+							return (
+								<MenuItem key={index} value={item.value}>
+									{item.label}
+								</MenuItem>
+							);
+						})}
+					</TextField>
 				);
 			}
 			default:
