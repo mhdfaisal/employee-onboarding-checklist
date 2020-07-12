@@ -4,7 +4,8 @@ import CustomStepper from '../../components/shared/CustomStepper';
 import AddCandidate from '../../components/AddCandidate';
 import InterviewFeedback from '../../components/InterviewFeedback';
 import SalaryNegotiation from '../../components/SalaryNegotitation';
-import EmailWidget from '../../components/shared/EmailWidget';
+import GiveOffer from '../../components/GiveOffer';
+import RejectCandidate from '../../components/RejectCandidate';
 
 const Home = () => {
 	return (
@@ -13,7 +14,8 @@ const Home = () => {
 			{/* <AddCandidate /> */}
 			{/* <InterviewFeedback /> */}
 			{/* <SalaryNegotiation /> */}
-			<EmailWidget />
+			<GiveOffer />
+			{/* <RejectCandidate /> */}
 		</div>
 	);
 };
