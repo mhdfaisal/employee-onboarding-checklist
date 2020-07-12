@@ -32,9 +32,9 @@ const Input = (props) => {
 	const { id, onInput } = props;
 	const { value, isValid } = inputState;
 
-	// useEffect(() => {
-	// 	onInput(id, value, isValid);
-	// }, [id, value, isValid, onInput]);
+	useEffect(() => {
+		onInput(id, value, isValid);
+	}, [id, value, isValid, onInput]);
 
 	const changeHandler = (event) => {
 		dispatch({
@@ -61,7 +61,6 @@ const Input = (props) => {
 					variant,
 					label,
 					disabled,
-					error,
 					errorText,
 					multiline,
 					rows,
@@ -78,8 +77,8 @@ const Input = (props) => {
 						label={label}
 						value={inputState.value}
 						disabled={disabled}
-						error={error}
-						helperText={error && errorText}
+						error={!inputState.isValid && inputState.isTouched}
+						helperText={!inputState.isValid && inputState.isTouched && errorText}
 						multiline={multiline}
 						rows={rows}
 						InputProps={{ ...InputProps }}
