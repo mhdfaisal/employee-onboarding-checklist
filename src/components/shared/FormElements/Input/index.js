@@ -101,7 +101,7 @@ const Input = (props) => {
 						disabled={disabled}
 						label={label}
 						value={inputState.value}
-						onChange={changeHandler}
+						onChange={(e) => changeHandler(e, false)}
 						onBlur={touchHandler}
 						fullWidth={true}
 						error={!inputState.isValid && inputState.isTouched}

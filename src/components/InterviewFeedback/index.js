@@ -77,6 +77,7 @@ const InterviewFeedback = () => {
 								label='Is candidate hired ?'
 								initialValue={formState?.inputs?.isHired?.value}
 								initialValid={true}
+								isCheckbox={true}
 							/>
 						</Grid>
 						<Grid item xs={12}>
