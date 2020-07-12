@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Button from '@material-ui/core/Button';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Input from '../shared/FormElements/Input';
 import Assignee from '../shared/Assignee';
@@ -22,17 +23,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const InterviewFeedback = () => {
+const SalaryNegotiation = () => {
 	const classes = useStyles();
 	const [formState, inputHandler] = useForm(
 		{
-			feedback: {
+			salary: {
 				value: '',
 				isValid: false,
-			},
-			isHired: {
-				value: 'no',
-				isValid: true,
 			},
 		},
 		false
@@ -43,7 +40,7 @@ const InterviewFeedback = () => {
 			<Paper className={classes.paper}>
 				<Grid container spacing={3}>
 					<Grid item xs={6}>
-						<h2 className={styles.title}>Interview Feedback</h2>
+						<h2 className={styles.title}>Negotiated Salary</h2>
 					</Grid>
 					<Grid item xs={6}>
 						<div className={styles.assigneeContainer}>
@@ -53,30 +50,21 @@ const InterviewFeedback = () => {
 				</Grid>
 				<form>
 					<Grid container spacing={3}>
-						<Grid item xs={12}>
+						<Grid item xs={4}>
 							<Input
-								id='feedback'
+								id='salary'
+								type='number'
 								element='input'
-								multiline={true}
-								rows={4}
-								placeholder='Please enter interview feedback'
-								type='text'
-								variant='outlined'
-								errorText='Feedback text is required (at least 150 characters)'
+								label='Salary amount'
+								errorText='Please enter the negotiated salary'
 								validators={[VALIDATOR_REQUIRE()]}
 								onInput={inputHandler}
 								fullWidth={true}
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<Input
-								id='isHired'
-								element='checkbox'
-								validators={[]}
-								onInput={inputHandler}
-								label='Is candidate hired ?'
-								initialValue={formState?.inputs?.isHired?.value}
-								initialValid={true}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>$</InputAdornment>
+									),
+								}}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -99,4 +87,4 @@ const InterviewFeedback = () => {
 		</Container>
 	);
 };
-export default InterviewFeedback;
+export default SalaryNegotiation;
