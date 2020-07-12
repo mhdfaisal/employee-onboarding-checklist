@@ -7,6 +7,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Button from '@material-ui/core/Button';
 
 import Input from '../shared/FormElements/Input';
+import Assignee from '../shared/Assignee';
 import { departmentConstantsArray } from '../../utils/departmentConstants';
 import { useForm } from '../hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../../utils/validators';
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 	},
 	paper: {
-		padding: theme.spacing(2),
+		padding: theme.spacing(4),
 		color: theme.palette.text.secondary,
 	},
 }));
@@ -45,15 +46,18 @@ const AddCandidate = () => {
 		},
 		false
 	);
+	const { isValid } = formState;
 	return (
 		<Container>
 			<Paper className={classes.paper}>
 				<Grid container spacing={3}>
 					<Grid item xs={6}>
-						<h2>Add Candidate Details</h2>
+						<h2 className={styles.title}>Add Candidate Details</h2>
 					</Grid>
 					<Grid item xs={6}>
-						<div className={styles.asigneeContainer}>Asignee</div>
+						<div className={styles.assigneeContainer}>
+							<Assignee />
+						</div>
 					</Grid>
 				</Grid>
 				<form>
@@ -112,13 +116,14 @@ const AddCandidate = () => {
 							/>
 						</Grid>
 						<Grid item xs={12}>
-							<div>
+							<div className={styles.formBtnContainer}>
 								<Button
 									type='submit'
 									variant='contained'
 									color='primary'
 									endIcon={<KeyboardArrowRight />}
 									size='large'
+									disabled={!isValid}
 								>
 									Submit
 								</Button>

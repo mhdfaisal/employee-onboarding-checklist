@@ -1,0 +1,13 @@
+.assigneeContent {
+	display: flex;
+}
+
+.assigneeContentItem {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.assigneeIcon {
+	margin-right: 0.5rem;
+}

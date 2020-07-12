@@ -1,3 +1,10 @@
-.asigneeContainer {
+.assigneeContainer {
+	display: flex;
+	justify-content: flex-end;
+}
+.formBtnContainer {
 	text-align: right;
+}
+.title {
+	margin-bottom: 1rem;
 }
