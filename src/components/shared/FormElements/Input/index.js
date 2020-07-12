@@ -1,6 +1,8 @@
 import React, { useReducer, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import { validate } from '../../../../utils/validators';
 
@@ -37,10 +39,10 @@ const Input = (props) => {
 		onInput(id, value, isValid);
 	}, [id, value, isValid, onInput]);
 
-	const changeHandler = (event) => {
+	const changeHandler = (event, isCheckBox = false) => {
 		dispatch({
 			type: 'CHANGE',
-			val: event.target.value,
+			val: isCheckBox ? (event.target.checked === true ? 'yes' : 'no') : event.target.value,
 			validators: props.validators,
 		});
 	};
@@ -113,6 +115,22 @@ const Input = (props) => {
 							);
 						})}
 					</TextField>
+				);
+			}
+			case 'checkbox': {
+				const { label } = props;
+				return (
+					<FormControlLabel
+						control={
+							<Checkbox
+								id={id}
+								onChange={(event) => changeHandler(event, true)}
+								name='checkedB'
+								color='primary'
+							/>
+						}
+						label={label}
+					/>
 				);
 			}
 			default:
