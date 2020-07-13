@@ -1,33 +1,45 @@
 import React from 'react';
 import SendIcon from '@material-ui/icons/Send';
 import Button from '@material-ui/core/Button';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import Input from '../FormElements/Input';
 import { useForm } from '../../hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../../../utils/validators';
+import {
+	CC,
+	BCC,
+	HIRED_SUBJECT,
+	NOT_HIRED_SUBJECT,
+	HIRED_BODY,
+	NOT_HIRED_BODY,
+} from '../../../utils/emailTemplateConstants';
 import styles from './style.module.css';
 
 const EmailWidget = () => {
+	const candidateInfo = useSelector((state) => {
+		return state?.onBoardingInfo?.candidateInfo ?? {};
+	}, shallowEqual);
 	const [formState, inputHandler] = useForm(
 		{
 			to: {
-				value: '',
+				value: candidateInfo?.email ?? '',
 				isValid: true,
 			},
 			cc: {
-				value: '',
+				value: CC,
 				isValid: true,
 			},
 			bcc: {
-				value: '',
+				value: BCC,
 				isValid: true,
 			},
 			subject: {
-				value: '',
+				value: candidateInfo?.isHired === 'yes' ? HIRED_SUBJECT : NOT_HIRED_SUBJECT,
 				isValid: true,
 			},
 			body: {
-				value: '',
+				value: candidateInfo?.isHired === 'yes' ? HIRED_BODY : NOT_HIRED_BODY,
 				isValid: true,
 			},
 		},
