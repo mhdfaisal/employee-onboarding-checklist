@@ -5,12 +5,15 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Button from '@material-ui/core/Button';
+import { useDispatch } from 'react-redux';
 
 import Input from '../shared/FormElements/Input';
 import Assignee from '../shared/Assignee';
 import { departmentConstantsArray } from '../../utils/departmentConstants';
 import { useForm } from '../hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../../utils/validators';
+import { saveData } from '../../store/actions';
+import { ADD_CANDIDATE_DETAILS } from '../../store/types';
 import styles from './style.module.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AddCandidate = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
 	const [formState, inputHandler] = useForm(
 		{
 			name: {
@@ -47,6 +51,24 @@ const AddCandidate = () => {
 		false
 	);
 	const { isValid } = formState;
+
+	const handleFormSubmit = (e) => {
+		e.preventDefault();
+		const { name, email, phone, department } = formState?.inputs ?? {};
+		dispatch(
+			saveData(
+				ADD_CANDIDATE_DETAILS,
+				{
+					name: name?.value,
+					email: email?.value,
+					phone: phone?.value,
+					department: department?.value,
+				},
+				2
+			)
+		);
+	};
+
 	return (
 		<Container>
 			<Paper className={classes.paper}>
@@ -60,14 +82,14 @@ const AddCandidate = () => {
 						</div>
 					</Grid>
 				</Grid>
-				<form>
+				<form onSubmit={handleFormSubmit}>
 					<Grid container spacing={3}>
 						<Grid item xs={6}>
 							<Input
 								id='name'
 								element='input'
 								type='text'
-								variant='standard'
+								variant='outlined'
 								label="Candidate's Name *"
 								errorText='Required'
 								validators={[VALIDATOR_REQUIRE()]}
@@ -80,7 +102,7 @@ const AddCandidate = () => {
 								id='email'
 								element='input'
 								type='email'
-								variant='standard'
+								variant='outlined'
 								label="Candidate's Email *"
 								errorText='Required'
 								validators={[VALIDATOR_REQUIRE()]}
@@ -93,7 +115,7 @@ const AddCandidate = () => {
 								id='phone'
 								element='input'
 								type='text'
-								variant='standard'
+								variant='outlined'
 								label="Candidate's Phone *"
 								errorText='Required'
 								validators={[VALIDATOR_REQUIRE()]}
@@ -106,7 +128,7 @@ const AddCandidate = () => {
 								id='department'
 								element='select'
 								type='text'
-								variant='standard'
+								variant='outlined'
 								label="Candidate's Department *"
 								errorText='Required'
 								validators={[VALIDATOR_REQUIRE()]}
