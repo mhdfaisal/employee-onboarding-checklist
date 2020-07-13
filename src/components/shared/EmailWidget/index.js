@@ -14,6 +14,7 @@ import {
 	HIRED_BODY,
 	NOT_HIRED_BODY,
 } from '../../../utils/emailTemplateConstants';
+import { EMAIL_BASE_URL } from '../../../utils/emailURLConstants';
 import styles from './style.module.css';
 
 const EmailWidget = () => {
@@ -35,7 +36,10 @@ const EmailWidget = () => {
 				isValid: true,
 			},
 			subject: {
-				value: candidateInfo?.isHired === 'yes' ? HIRED_SUBJECT : NOT_HIRED_SUBJECT,
+				value:
+					candidateInfo?.isHired === 'yes'
+						? HIRED_SUBJECT + ' ' + candidateInfo?.name
+						: NOT_HIRED_SUBJECT + ' ' + candidateInfo?.name,
 				isValid: true,
 			},
 			body: {
@@ -45,8 +49,27 @@ const EmailWidget = () => {
 		},
 		true
 	);
+	const openGmailCompose = (e) => {
+		e.preventDefault();
+		const { inputs } = formState;
+		const { to, cc, bcc, subject, body } = inputs;
+		const URL =
+			EMAIL_BASE_URL +
+			'&to=' +
+			encodeURI(to.value) +
+			'&cc=' +
+			encodeURI(cc.value) +
+			'&bcc=' +
+			encodeURI(bcc.value) +
+			'&su=' +
+			encodeURI(subject.value) +
+			'&body=' +
+			encodeURI(body.value);
+		window.open(URL);
+	};
+
 	return (
-		<form>
+		<form onSubmit={openGmailCompose}>
 			<div className={styles.formItemFlex}>
 				<div className={styles.label}>To</div>
 				<div className={styles.formControl}>
