@@ -6,11 +6,14 @@ import Grid from '@material-ui/core/Grid';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Button from '@material-ui/core/Button';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Input from '../shared/FormElements/Input';
 import Assignee from '../shared/Assignee';
 import { useForm } from '../hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../../utils/validators';
+import { saveData } from '../../store/actions';
+import { ADD_SALARY_NEGOTIATION } from '../../store/types';
 import styles from '../AddCandidate/style.module.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
 const SalaryNegotiation = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const candidateInfo = useSelector((state) => {
+		return state?.onBoardingInfo?.candidateInfo ?? {};
+	}, shallowEqual);
 	const [formState, inputHandler] = useForm(
 		{
 			salary: {
@@ -35,6 +42,21 @@ const SalaryNegotiation = () => {
 		false
 	);
 	const { isValid } = formState;
+
+	const handleFormSubmit = (e) => {
+		e.preventDefault();
+		const { salary } = formState?.inputs ?? {};
+		dispatch(
+			saveData(
+				ADD_SALARY_NEGOTIATION,
+				{
+					...candidateInfo,
+					salary: salary?.value,
+				},
+				4
+			)
+		);
+	};
 	return (
 		<Container>
 			<Paper className={classes.paper}>
@@ -48,7 +70,7 @@ const SalaryNegotiation = () => {
 						</div>
 					</Grid>
 				</Grid>
-				<form>
+				<form onSubmit={handleFormSubmit}>
 					<Grid container spacing={3}>
 						<Grid item xs={4}>
 							<Input

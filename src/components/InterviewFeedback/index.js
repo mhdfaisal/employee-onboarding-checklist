@@ -5,11 +5,14 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Button from '@material-ui/core/Button';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Input from '../shared/FormElements/Input';
 import Assignee from '../shared/Assignee';
 import { useForm } from '../hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../../utils/validators';
+import { saveData } from '../../store/actions';
+import { ADD_INTERVIEW_FEEDBACK } from '../../store/types';
 import styles from '../AddCandidate/style.module.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
 
 const InterviewFeedback = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const candidateInfo = useSelector((state) => {
+		return state?.onBoardingInfo?.candidateInfo ?? {};
+	}, shallowEqual);
 	const [formState, inputHandler] = useForm(
 		{
 			feedback: {
@@ -38,6 +45,21 @@ const InterviewFeedback = () => {
 		false
 	);
 	const { isValid } = formState;
+	const handleFormSubmit = (e) => {
+		e.preventDefault();
+		const { feedback, isHired } = formState?.inputs ?? {};
+		dispatch(
+			saveData(
+				ADD_INTERVIEW_FEEDBACK,
+				{
+					...candidateInfo,
+					feedback: feedback?.value,
+					isHired: isHired?.value,
+				},
+				3
+			)
+		);
+	};
 	return (
 		<Container>
 			<Paper className={classes.paper}>
@@ -51,7 +73,7 @@ const InterviewFeedback = () => {
 						</div>
 					</Grid>
 				</Grid>
-				<form>
+				<form onSubmit={handleFormSubmit}>
 					<Grid container spacing={3}>
 						<Grid item xs={12}>
 							<Input

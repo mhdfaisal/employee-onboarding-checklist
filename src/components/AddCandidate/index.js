@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const AddCandidate = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const store = useSelector((state) => {
+	const candidateInfo = useSelector((state) => {
 		return state?.onBoardingInfo?.candidateInfo ?? {};
 	}, shallowEqual);
 	const [formState, inputHandler] = useForm(
@@ -62,7 +62,7 @@ const AddCandidate = () => {
 			saveData(
 				ADD_CANDIDATE_DETAILS,
 				{
-					...store.candidateInfo,
+					...candidateInfo,
 					name: name?.value,
 					email: email?.value,
 					phone: phone?.value,
