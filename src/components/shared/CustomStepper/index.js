@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -87,9 +88,12 @@ const getSteps = () => {
 };
 
 const CustomStepper = () => {
+	const step = useSelector((state) => {
+		return state?.onBoardingInfo?.step ?? 1;
+	}, shallowEqual);
 	const steps = getSteps();
 	return (
-		<Stepper activeStep={0} alternativeLabel connector={<ColorlibConnector />}>
+		<Stepper activeStep={step - 1} alternativeLabel connector={<ColorlibConnector />}>
 			{steps.map((item, index) => {
 				return (
 					<Step key={index}>

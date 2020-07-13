@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Button from '@material-ui/core/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Input from '../shared/FormElements/Input';
 import Assignee from '../shared/Assignee';
@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
 const AddCandidate = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const store = useSelector((state) => {
+		return state?.onBoardingInfo?.candidateInfo ?? {};
+	}, shallowEqual);
 	const [formState, inputHandler] = useForm(
 		{
 			name: {
@@ -59,6 +62,7 @@ const AddCandidate = () => {
 			saveData(
 				ADD_CANDIDATE_DETAILS,
 				{
+					...store.candidateInfo,
 					name: name?.value,
 					email: email?.value,
 					phone: phone?.value,
