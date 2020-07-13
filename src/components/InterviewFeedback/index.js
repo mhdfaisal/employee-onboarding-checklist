@@ -56,7 +56,7 @@ const InterviewFeedback = () => {
 					feedback: feedback?.value,
 					isHired: isHired?.value,
 				},
-				3
+				isHired?.value === 'no' ? 5 : 3
 			)
 		);
 	};

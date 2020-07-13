@@ -83,17 +83,33 @@ const ColorlibStepIcon = (props) => {
 	);
 };
 
-const getSteps = () => {
-	return ['Add Candidate', 'Interview', 'Salary Negotiation', 'Give Offer', 'Reject Candidate'];
+const getSteps = (isHired) => {
+	const stepsArray = [
+		'Add Candidate',
+		'Interview',
+		'Salary Negotiation',
+		'Give Offer',
+		'Reject Candidate',
+	];
+	if (isHired === 'yes') {
+		return [...stepsArray.slice(0, stepsArray.length - 1)];
+	} else if (isHired === 'no') {
+		return [...stepsArray.slice(0, 2), ...stepsArray.slice(stepsArray.length - 1)];
+	}
+	return [...stepsArray];
 };
 
 const CustomStepper = () => {
-	const step = useSelector((state) => {
-		return state?.onBoardingInfo?.step ?? 1;
+	const requiredStoreData = useSelector((state) => {
+		return {
+			activeStep: state?.onBoardingInfo?.step ?? 1,
+			isHired: state?.onBoardingInfo?.candidateInfo?.isHired ?? null,
+		};
 	}, shallowEqual);
-	const steps = getSteps();
+	const { activeStep, isHired } = requiredStoreData;
+	const steps = getSteps(isHired);
 	return (
-		<Stepper activeStep={step - 1} alternativeLabel connector={<ColorlibConnector />}>
+		<Stepper activeStep={activeStep - 1} alternativeLabel connector={<ColorlibConnector />}>
 			{steps.map((item, index) => {
 				return (
 					<Step key={index}>
