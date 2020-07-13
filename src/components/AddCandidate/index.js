@@ -11,7 +11,7 @@ import Input from '../shared/FormElements/Input';
 import Assignee from '../shared/Assignee';
 import { departmentConstantsArray } from '../../utils/departmentConstants';
 import { useForm } from '../hooks/form-hook';
-import { VALIDATOR_REQUIRE } from '../../utils/validators';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from '../../utils/validators';
 import { saveData } from '../../store/actions';
 import { ADD_CANDIDATE_DETAILS } from '../../store/types';
 import styles from './style.module.css';
@@ -108,8 +108,8 @@ const AddCandidate = () => {
 								type='email'
 								variant='outlined'
 								label="Candidate's Email *"
-								errorText='Required'
-								validators={[VALIDATOR_REQUIRE()]}
+								errorText='Invalid email'
+								validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
 								onInput={inputHandler}
 								fullWidth={true}
 							/>

@@ -10,7 +10,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import Input from '../shared/FormElements/Input';
 import Assignee from '../shared/Assignee';
 import { useForm } from '../hooks/form-hook';
-import { VALIDATOR_REQUIRE } from '../../utils/validators';
+import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../../utils/validators';
 import { saveData } from '../../store/actions';
 import { ADD_INTERVIEW_FEEDBACK } from '../../store/types';
 import styles from '../AddCandidate/style.module.css';
@@ -84,8 +84,8 @@ const InterviewFeedback = () => {
 								placeholder='Please enter interview feedback'
 								type='text'
 								variant='outlined'
-								errorText='Feedback text is required (at least 150 characters)'
-								validators={[VALIDATOR_REQUIRE()]}
+								errorText='Required (at least 15 characters)'
+								validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(15)]}
 								onInput={inputHandler}
 								fullWidth={true}
 							/>
